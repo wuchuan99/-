@@ -1,0 +1,1529 @@
+<html>
+  <head>
+	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>i5ting_ztree_toc:README</title>
+		<link href="toc/style/github-bf51422f4bb36427d391e4b75a1daa083c2d840e.css" media="all" rel="stylesheet" type="text/css"/>
+		<link href="toc/style/github2-d731afd4f624c99a4b19ad69f3083cd6d02b81d5.css" media="all" rel="stylesheet" type="text/css"/>
+		<link href="toc/css/zTreeStyle/zTreeStyle.css" media="all" rel="stylesheet" type="text/css"/>
+	  <style>
+		pre {
+		    counter-reset: line-numbering;
+		    border: solid 1px #d9d9d9;
+		    border-radius: 0;
+		    background: #fff;
+		    padding: 0;
+		    line-height: 23px;
+		    margin-bottom: 30px;
+		    white-space: pre;
+		    overflow-x: auto;
+		    word-break: inherit;
+		    word-wrap: inherit;
+		}
+
+		pre a::before {
+		  content: counter(line-numbering);
+		  counter-increment: line-numbering;
+		  padding-right: 1em; /* space after numbers */
+		  width: 25px;
+		  text-align: right;
+		  opacity: 0.7;
+		  display: inline-block;
+		  color: #aaa;
+		  background: #eee;
+		  margin-right: 16px;
+		  padding: 2px 10px;
+		  font-size: 13px;
+		  -webkit-touch-callout: none;
+		  -webkit-user-select: none;
+		  -khtml-user-select: none;
+		  -moz-user-select: none;
+		  -ms-user-select: none;
+		  user-select: none;
+		}
+
+		pre a:first-of-type::before {
+		  padding-top: 10px;
+		}
+
+		pre a:last-of-type::before {
+		  padding-bottom: 10px;
+		}
+
+		pre a:only-of-type::before {
+		  padding: 10px;
+		}
+
+		.highlight { background-color: #ffffcc } /* RIGHT */
+		</style>
+  </head>
+  <body>
+	  <div>
+				<div style='width:25%;'>
+						<ul id="tree" class="ztree" style='width:100%'>
+
+						</ul>
+				</div>
+        <div id='readme' style='width:70%;margin-left:20%;'>
+          	<article class='markdown-body'>
+            	<h1 id="vue">Vue</h1>
+<h2 id="vue-">Vue基础</h2>
+<blockquote>
+<p>Vue是基于M(数据)V(视图)VM(调度者)这种设计模式开发出来的一个框架</p>
+<p>MVC和MVVM之间的区别: MVC是单向通信 MVVM是双向数据绑定</p>
+</blockquote>
+<h2 id="vue-">Vue基本的编码步骤</h2>
+<ol>
+<li>引入Vue.js框架<pre><code class="lang-javascript">&lt;script src=&#39;./src/vue.js&#39;&gt;&lt;/script&gt;
+</code></pre>
+</li>
+<li>在script标签部分创建一个Vue实例<pre><code class="lang-javascript">var vm = new Vue({
+ el:&#39;#app&#39;, // 通过选择器找到一个让vm实例监管的区域
+ data:{
+     // 在data中定义的数据就是整个Vue实例可以用到的数据
+     msg:&#39;hello&#39;
+ }
+})
+</code></pre>
+</li>
+<li>在HTML结构部分书写Vue代码<pre><code class="lang-html">&lt;div id = &#39;app&#39;&gt;
+ {{msg}}
+&lt;/div&gt;
+</code></pre>
+</li>
+</ol>
+<h2 id="vue-">Vue指令</h2>
+<ul>
+<li><p><code>{{}}</code>:插值表达式,用于显示<code>data</code>中定义的数据</p>
+</li>
+<li><p><code>v-text</code>:用于显示<code>data</code>中定义的普通文本数据</p>
+</li>
+</ul>
+<pre><code class="lang-javascript">new Vue({
+    el:&#39;#app&#39;,
+    data:{
+        msg:&#39;普通文本数据&#39;
+    }
+})
+&lt;p v-text = &#39;msg&#39;&gt;&lt;/p&gt;
+</code></pre>
+<ul>
+<li><code>v-html</code>:用于显示<code>data</code>中定义的富文本数据(带有HTML标签的文本)</li>
+</ul>
+<pre><code class="lang-javascript">new Vue({
+    el:&#39;#app&#39;,
+    data:{
+        msg:&#39;&lt;p&gt;富文本数据&lt;p/&gt;&#39;
+    }
+})
+
+&lt;div v-html = &#39;msg&#39;&gt;&lt;/div&gt;
+</code></pre>
+<ul>
+<li><code>v-bind</code>:动态的给元素绑定属性</li>
+</ul>
+<pre><code class="lang-javascript">new Vue({
+    el:&#39;#app&#39;,
+    data:{
+        url:&#39;http://www.baidu.com/&#39;
+    }
+})
+
+&lt;a v-bind:href = &#39;url&#39;&gt;百度&lt;/a&gt;
+</code></pre>
+<ul>
+<li><code>v-for</code>:用于循环渲染元素进行显示</li>
+</ul>
+<pre><code class="lang-html">&lt;div v-for = &#39;(item,index) in list&#39; :key = &#39;index&#39;&gt;
+    &lt;!-- 数组中的每一项 --&gt;
+    {{item}} 
+    &lt;!--  当前项的索引 --&gt;
+    {{index}}
+&lt;/div&gt;
+</code></pre>
+<ul>
+<li><code>v-model</code>:用于对表单元素实现双向数据绑定,即模型中数据发生变化可以直接更新视图,视图中数据发生变化也可以影响到模型</li>
+</ul>
+<pre><code class="lang-html">&lt;!-- v-model 指令只能用于表单元素和组件 常见于input/textarea/select标签上 --&gt;
+&lt;input v-model = &#39;name&#39;&gt;&lt;/input&gt;
+</code></pre>
+<ul>
+<li><code>v-on</code>:绑定事件</li>
+</ul>
+<pre><code class="lang-html">&lt;button v-on:click = &#39;clickHandle&#39;&gt;&lt;/button&gt;
+</code></pre>
+<pre><code class="lang-JavaScript">new Vue({
+    el:&#39;#app&#39;,
+    // methods中专门用来定义方法
+    methods:{
+        clickHandle:function(){
+            console.log(&#39;点击事件被触发了&#39;)
+        }
+    }
+})
+</code></pre>
+<ul>
+<li><code>v-if</code>:控制元素的显示隐藏</li>
+</ul>
+<blockquote>
+<p>通过添加和移除元素控制元素显示隐藏</p>
+<p>如果元素初始状态是隐藏的,而且不涉及频繁显示隐藏切换,推荐使用v-if</p>
+</blockquote>
+<pre><code class="lang-html">&lt;div v-if = &#39;isshow&#39;&gt;&lt;/div&gt;
+</code></pre>
+<pre><code class="lang-javascript">new Vue({
+    el:&#39;#app&#39;,
+    data:{
+        isshow:true
+    }
+})
+</code></pre>
+<ul>
+<li><code>v-show</code>:控制元素的显示隐藏</li>
+</ul>
+<blockquote>
+<p>通过给元素设置<code>display:none</code>的样式控制元素显示隐藏</p>
+<p>如果元素涉及频繁显示隐藏切换,推荐使用v-show,性能会比v-if好</p>
+</blockquote>
+<pre><code class="lang-html">&lt;div v-show = &#39;isshow&#39;&gt;&lt;/div&gt;
+</code></pre>
+<pre><code class="lang-javascript">new Vue({
+    el:&#39;#app&#39;,
+    data:{
+        isshow:true
+    }
+})
+</code></pre>
+<h2 id="ref-dom">ref获取DOM</h2>
+<blockquote>
+<p>通过给元素设置ref属性,然后使用this.$refs.属性值得方式可以获取到DOM</p>
+</blockquote>
+<pre><code class="lang-html">&lt;div ref = &#39;dv&#39;&gt;&lt;/div&gt;
+&lt;button @click = &#39;getdv&#39;&gt;获取div元素&lt;/button&gt;
+</code></pre>
+<pre><code class="lang-JavaScript">new Vue({
+    el:&#39;#app&#39;,
+    methods:{
+        getdv(){
+            console.log(this.$refs.dv)
+        }
+    }
+})
+</code></pre>
+<h2 id="-">自定义指令</h2>
+<blockquote>
+<p>指令能够帮助开发者操作DOM,当系统指令不能够满足需求时,就可以使用自定义指令进行DOM操作;将操作DOM的方式封装成指令后首先可以重复使用,其次封装成指令的过程是vue内部提供的方法,这些方法在性能上比直接操作DOM元素要高。</p>
+</blockquote>
+<pre><code class="lang-javascript">Vue.directive(&#39;mycolor&#39;,{
+    // 指令的钩子函数
+    inserted(el,binding){
+        // el 是指令所在的元素对象
+        // bingding是一个对象
+        // binding.value // red 指令等号后面表达式的值 也就是变量的值
+        // binding.expression // 指令等号后面的表达式  本质就是一个变量
+    }
+})
+
+new Vue({
+    el:&#39;#app&#39;,
+    data:{
+        color:&#39;red&#39;
+    }
+})
+</code></pre>
+<pre><code class="lang-html">&lt;div v-mycolor = &quot;color&quot;&gt;&lt;/div&gt;
+</code></pre>
+<h2 id="-">自定义过滤器</h2>
+<blockquote>
+<p>在数据展示之前,对原始数据进行处理并返回处理后的数据进行展示,不改变原始数据</p>
+<p>过滤器只能用在插值表达式和属性绑定(v-bind)中</p>
+</blockquote>
+<pre><code class="lang-javascript">Vue.filter(&#39;过滤器名称&#39;,function(data,arg){
+    // data是原始数据,即管道符前面的数据
+    // arg 是使用过滤器时传递的参数
+    // 1. 对原始数据进行逻辑处理
+    // 2. 处理完成后进行return
+    return `处理完的数据`
+})
+</code></pre>
+<pre><code class="lang-html">&lt;div&gt;{{原始数据 | 过滤器名称(参数)}}&lt;/div&gt;
+</code></pre>
+<h2 id="-computed">计算属性computed</h2>
+<blockquote>
+<p>用于定义一种可以随着所依赖数据发生变化的属性</p>
+</blockquote>
+<pre><code class="lang-javascript">new Vue({
+    el:&#39;#app&#39;,
+    // data中定义普通属性
+    data:{
+        msg:&#39;&#39;
+    },
+    // compluted中定义的函数名就是计算属性 属性的值是该函数的返回值
+    // 计算属性的值会随着依赖数据的变化而变化
+    // 例如this.msg被修改 则comMsg的值也会重新计算
+    compluted:{
+        comMsg(){
+            return this.msg
+        }
+    }
+})
+</code></pre>
+<h2 id="-watch">监听器 watch</h2>
+<blockquote>
+<p>监听data中定义的数据的变化</p>
+</blockquote>
+<pre><code class="lang-javascript">new Vue({
+    el:&#39;#app&#39;,
+    data:{
+        msg:&#39;被监听数据&#39;,
+        obj:{
+            name:&#39;zxx&#39;
+        }
+    },
+    watch:{
+        msg(newVal,oldVal){
+            // 根据数据变化做相关逻辑处理
+            // newVal 变化后的值
+            // oldVal 变化前的值
+        },
+        // 当被监听的数据是复杂数据类型时,一般需要用深度监听才可以监听到复杂数据类型内部的数据变化
+        obj:{
+            handler(newVal,oldVal){
+
+            },
+            deep:true
+        }
+    }
+})
+</code></pre>
+<h2 id="axios-">axios发送请求</h2>
+<blockquote>
+<p>axios是一个基于promise的请求库,可以在node环境和浏览器环境中使用。</p>
+</blockquote>
+<ol>
+<li>引入axios</li>
+</ol>
+<pre><code class="lang-js">&lt;script src=&quot;https://unpkg.com/axios/dist/axios.min.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<ol>
+<li>get请求</li>
+</ol>
+<pre><code class="lang-js">axios.get(&#39;url&#39;).then(function(res){
+    // res.data即后台返回的数据
+    console.log(res.data)
+})
+</code></pre>
+<ol>
+<li>post请求<pre><code class="lang-js">axios.post(&#39;url&#39;,{
+ username:&#39;zxx&#39;,
+ password:&#39;123456&#39;
+}).then(function(res){
+ // res.data即后台返回的数据
+ console.log(res.data)
+})
+</code></pre>
+</li>
+</ol>
+<h2 id="vue-">vue过渡动画</h2>
+<blockquote>
+<p>vue中的过渡动画只能作用于使用<code>v-if</code>、<code>v-show</code>控制的元素已经动态组件中</p>
+</blockquote>
+<h3 id="-css-">使用css类实现动画</h3>
+<p>1.使用<code>transition</code>标签将需要实现动画的元素包裹起来</p>
+<pre><code class="lang-html">&lt;button @click = &#39;isshow = !isshow&#39;&gt;&lt;/button&gt;
+&lt;transition&gt;
+    &lt;div v-if = &#39;isshow&#39;&gt;御剑乘风来&lt;/div&gt;
+&lt;/transition&gt;
+</code></pre>
+<ol>
+<li>使用css类控制动画效果</li>
+</ol>
+<pre><code class="lang-css">/* 进入动画就是一个元素从隐藏到显示这个过程需要执行的动画 */
+
+/* 离开动画是一个元素从显示到隐藏这个过程需要执行的动画 */
+/* 元素执行进入动画之前的状态 */
+.fade-enter {
+    transform: translateX(100px)
+}
+/* 元素执行进入动画的过程中持续添加到元素的状态 */
+/* 在这个类中通常都是书写元素需要执行的动画效果 */
+.fade-enter-active {
+    transition: all 0.2s ease
+}
+/* 元素执行进入动画结束状态 */
+/* 在这个类中通常是用来设置元素执行动画完毕之后的样式 */
+.fade-enter-to {
+    transform: translateX(0)
+}
+/* 元素执行离开动画之前需要设定的样式 */
+.fade-leave {
+    transform: translateX(0)
+}
+/* 元素执行离开动画的过程中持续添加到元素身上 */
+.fade-leave-active {
+    transition: all 0.5s ease
+}
+/* 元素中心离开动画过程中持续添加到元素身上 */
+.fade-leave-to {
+    transform: translateX(100px)
+}
+</code></pre>
+<h3 id="-animate-css-">使用animate.css实现动画</h3>
+<p>1.使用<code>transition</code>标签将需要实现动画的元素包裹起来</p>
+<pre><code class="lang-html">&lt;button @click = &#39;isshow = !isshow&#39;&gt;&lt;/button&gt;
+&lt;transition&gt;
+    &lt;div v-if = &#39;isshow&#39;&gt;御剑乘风来&lt;/div&gt;
+&lt;/transition&gt;
+</code></pre>
+<ol>
+<li>使用animate.css提供的类名设置动画</li>
+</ol>
+<pre><code class="lang-html">&lt;transition 
+enter-active-class = &#39;animate fadeIn&#39;
+leave-active-class = &#39;animate fadeOut&#39;
+&gt;
+    &lt;div v-if = &#39;isshow&#39;&gt;御剑乘风来&lt;/div&gt;
+&lt;/transition&gt;
+</code></pre>
+<h3 id="-">使用动画的钩子函数实现</h3>
+<pre><code class="lang-js">// 1. 将需要实现动画的元素使用transition标签包裹起来
+&lt;transition&gt;
+    &lt;div&gt;我是需要过渡动画的元素&lt;/div&gt;
+&lt;/transition&gt;
+
+// 2. 在transition上注册实现动画的钩子函数,入场动画三个,出场动画三个
+&lt;transition 
+@before-enter = &#39;beforeEnter&#39;
+@enter = &#39;enter&#39;
+@after-enter = &#39;afterEnter&#39;
+@before-leave = &#39;beforeLeave&#39;
+@leave = &#39;leave&#39;
+@after-leave = &#39;afterLeave&#39;
+&gt;
+    &lt;div&gt;我是需要过渡动画的元素&lt;/div&gt;
+&lt;/transition&gt;
+
+// 3. 在vue实例的methods中定义钩子函数
+new Vue({
+    el:&#39;#app&#39;,
+    data:{},
+    methods:{
+        // 入场动画初始状态设置
+        beforeEnter(){
+            // 一般使用JS设置执行动画元素的初始位置和其他样式属性
+        },
+        // 入场动画持续过程
+        enter(el,done){
+            // 1. 固定写法 迫使浏览器重绘 刷新动画
+            el.offsetWidth
+            // 2. 一般设置执行动画元素最终的位置和其他样式属性
+
+            // 3. 固定写法 调用afterEnter函数
+            done()
+        },
+        // 入场动画结束状态
+        afterEnter(){
+            // 设置动画元素回到初始状态
+        },
+        // 出场动画初始状态
+        beforeLeave(){
+
+        },
+        // 出场动画持续状态
+        leave(){
+
+        },
+        // 出场动画结束状态
+        afterLeave(){
+
+        }
+    }
+})
+</code></pre>
+<h2 id="-">组件</h2>
+<blockquote>
+<p>组件就是对视图的封装,方便重复使用</p>
+<p>模块是对功能逻辑的封装</p>
+<p><strong>注意</strong>:</p>
+<ol>
+<li>定义组件时如果使用的是驼峰命名,那么使用组件时需要将驼峰的大写字母转成小写,并且用-连接两个单词 <pre><code class="lang-javascript">Vue.component(&#39;myCom&#39;,{
+ template:&#39;&lt;div&gt;我是一个驼峰命名的组件&lt;/div&gt;&#39;
+})
+// 使用
+&lt;my-com&gt;&lt;/my-com&gt;
+</code></pre>
+</li>
+<li>组件的<code>template</code>属性中的模版内部如果有多个元素,必须被包含在唯一的一个根元素中<pre><code class="lang-javascript">&lt;template&gt;
+ &lt;div&gt;
+     &lt;p&gt;我是p元素&lt;/p&gt;
+     &lt;span&gt;我是span元素&lt;/span&gt;
+ &lt;/div&gt;
+&lt;/template&gt;
+</code></pre>
+</li>
+<li>子组件使用<code>components</code>属性进行定义,定义好的子组件只能在父组件的模板中使用<pre><code class="lang-javascript">&lt;template id=&#39;father&#39;&gt;
+ &lt;div&gt;
+     &lt;son&gt;&lt;/son&gt;
+ &lt;/div&gt;
+&lt;/template&gt;
+// 父组件
+Vue.component(&#39;father&#39;,{
+ template:&#39;#father&#39;,
+ components:{
+     // 子组件
+     son:{
+         template:&#39;&lt;div&gt;我是son组件&lt;/div&gt;&#39;
+     }
+ }
+})
+</code></pre>
+</li>
+</ol>
+</blockquote>
+<h3 id="-">组件的三种定义方式</h3>
+<ul>
+<li><code>vue.extend()</code>定义</li>
+</ul>
+<pre><code class="lang-javascript">// 1. 使用vue.extend()定义组件模板
+var dv = Vue.extend({
+    template:&#39;&lt;div&gt;我是一个组件&lt;/div&gt;&#39;
+})
+
+// 2. 使用Vue.component()注册组件
+Vue.component(&#39;com&#39;,dv)
+
+// 3. 在Vue托管区域像使用普通HTML标签一样使用组件
+&lt;com&gt;&lt;/com&gt;
+</code></pre>
+<ul>
+<li><code>vue.component()</code>定义</li>
+</ul>
+<pre><code class="lang-javascript">// 1. 使用Vue.component定义组件
+Vue.component(&#39;com&#39;,{
+    template:&#39;&lt;div&gt;&lt;p&gt;我是一个组件中的元素&lt;/p&gt;&lt;span&gt;我也是组件中的元素&lt;/span&gt;&lt;/div&gt;&#39;
+})
+
+// 2. 使用组件
+&lt;com&gt;&lt;/com&gt;
+</code></pre>
+<ul>
+<li>使用<code>template</code>标签定义模板</li>
+</ul>
+<pre><code class="lang-javascript">// 1. 使用Vue.component定义组件，并且使用选择器选择模板
+Vue.component(&#39;com&#39;,{
+    template:&#39;#temp&#39;
+}) 
+
+// 2. 使用template标签定义模板,并且给template标签添加id
+&lt;template id=&#39;tmpl&#39;&gt;
+    &lt;div&gt;
+        &lt;p&gt;我是p元素&lt;/p&gt;
+        &lt;span&gt;我是span元素&lt;/span&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+
+// 3. 使用组件
+&lt;com&gt;&lt;/com&gt;
+</code></pre>
+<h3 id="is-component-">is属性和component实现组件切换</h3>
+<pre><code>// comname 是哪个组件名,则component就会被渲染成哪个组件
+// component 就是一个占位标签 
+&lt;component :is=&#39;comname&#39;&gt;&lt;/component&gt;
+
+new Vue({
+    el:&#39;#app&#39;,
+    comname:&#39;login&#39;
+})
+</code></pre><h3 id="-">父子组件传值</h3>
+<h4 id="-">父向子传值</h4>
+<pre><code class="lang-javascript">// 1. 先在父组件中定义好要传递的数据
+new Vue({
+    el:&#39;#app&#39;
+    data:{
+        msg:&#39;我是要传递给子组件的数据&#39;
+    },
+    components:{
+        son:{
+            template:&#39;&lt;div&gt;我是子组件{{message}}&lt;/div&gt;&#39;,
+            props:[&#39;message&#39;]
+        }
+    }
+})
+
+// 2. 在父组件中使用子组件的时候,用绑定属性的方式将父组件中的数据传递给子组件
+&lt;div id=&#39;app&#39;&gt;
+    &lt;son v-bind:message = &#39;msg&#39;&gt;&lt;/son&gt;
+&lt;/div&gt;
+
+// 3. 在子组件中定义一个props属性,该属性是一个数组,数组中定义用于接收传过来的变量。这个变量
+// 和第二步绑定的这个属性同名
+son:{
+    template:&#39;&lt;div&gt;我是子组件&lt;/div&gt;&#39;,
+    props:[&#39;message&#39;]
+}
+</code></pre>
+<h4 id="-">子向父传值</h4>
+<blockquote>
+<p>发布订阅者 设计模式</p>
+</blockquote>
+<pre><code class="lang-javascript">// 1. 定义好父子组件,定义好子组件需要传递给父组件的数据
+new Vue({
+    el:&#39;#app&#39;
+    components:{
+        son:{
+            template:&#39;&lt;div&gt;我是子组件{{message}}&lt;/div&gt;&#39;,
+            data:function(){
+                return {
+                    msg:&#39;传给父组件的数据&#39;
+                }
+            }
+        }
+    }
+})
+
+// 2. 在子组件中使用this.$emit触发一个自定义的方法名,然后传递数据
+// 第一个参数就是自定义的方法名
+// 第二个参数就是需要传递给父组件的数据
+this.$emit(&#39;func&#39;,this.msg)
+
+// 3. 在父组件中使用子组件时,绑定一个事件,事件名称和子组件触发的方法名同名
+&lt;div id=&#39;app&#39;&gt;
+    &lt;son @func = &#39;getmsg&#39;&gt;&lt;/son&gt;
+&lt;/div&gt;
+
+// 4. 在父组件的methods中定义一个事件处理函数
+methods:{
+    getmsg:function(data){
+        // data就是子组件传过来的数据
+    }
+}
+</code></pre>
+<h2 id="-">生命周期钩子函数</h2>
+<blockquote>
+<p>回调函数:一个函数被当做参数进行传递的时候,称作这个函数为回调函数</p>
+<p>构造函数:一个函数被new 关键字引导执行的时候,称作这个函数为构造函数</p>
+<p>钩子函数: 一个应用程序或者框架内部提前定义好的一批函数,这些函数会在特定的时间段自动执行</p>
+<p>生命周期: 一个程序会存在初始化 - 运行 - 销毁等阶段,这些阶段统称为该程序的生命周期</p>
+</blockquote>
+<pre><code>new Vue({
+    el:&#39;#app&#39;,
+    data:{},
+    methods:{},
+    beforeCreated(){},
+    // data中的数据和methods中的方法已经初始化完毕会去自动执行created方法
+    created(){
+        // 用于发生数据请求,也可以初始化一些数据
+    },
+    beforeMount(){},
+    // 真实DOM已经渲染完毕会执行mounted函数
+    mounted(){
+        // 操作真实DOM
+    }
+    beforeUpdate(){},
+    // data中的发生了变化而且被重新渲染到了界面上时才会执行
+    updated(){
+        // 数据更新后重新操作DOM
+    },
+    // 实例销毁之前,实例上面的各种属性和方法都还可以正常访问,通常可以在这里手动回收一些页面没有被释放的变量,比如清楚定时器的操作。
+    beforeDestroy(){},
+    // 实例已经从内存中被销毁
+    destroyed(){}
+})
+</code></pre><h2 id="-">路由</h2>
+<blockquote>
+<p>后端路由:监听不同的URI(地址),做不同的请求处理</p>
+<p>前端路由:是专门为SPA(单页应用程序)服务,也是监听不同的地址,做页面的切换</p>
+</blockquote>
+<h3 id="-">基本使用步骤</h3>
+<pre><code class="lang-javascript">1. 创建路由对象并配置路由规则
+// 1.1 创建组件模板对象
+var login = {
+    template:&#39;&lt;div&gt;登录&lt;/div&gt;&#39;
+}
+var register = {
+    template:&#39;&lt;div&gt;注册&lt;/div&gt;&#39;
+}
+// 1.2 创建路由对象并配置路由规则
+var router1 = new VueRouter({
+    // routes用来存放路由规则,每个路由规则都是一个对象
+    routes:[
+        // path: 页面#后面的地址
+        // component 需要显示的组件对象
+        {path:&#39;/&#39;,redirect:&#39;/login&#39;},
+        {path:&#39;/login&#39;,component:login},
+        {path:&#39;/register&#39;,component:register}
+    ]
+})
+
+// 1.3 将创建处理的路由对象和Vue进行绑定
+new Vue({
+    el:&#39;#app&#39;,
+    // 将vuerouter对象注册到Vue内部,以保证在托管区域中可以使用VueRouter内部提供的组件以及其他属性和方法
+    router:router1
+})
+
+2. 使用&lt;router-view&gt;进行占位
+&lt;div id=&#39;app&#39;&gt;  
+    &lt;router-view&gt;&lt;/router-view&gt;
+&lt;div&gt;
+
+3. 使用&lt;router-link&gt;设置跳转路径
+&lt;router-link to=&#39;/login&#39;&gt;登录&lt;/router-link&gt;
+</code></pre>
+<h3 id="-">路由传参</h3>
+<h4 id="query-">query传参</h4>
+<pre><code class="lang-JavaScript">// 1. 在跳转路径后面使用查询字符串拼接参数
+&lt;router-link to = &#39;/login?name=zs$age=18&#39;&gt;登录&lt;/router-link&gt;
+
+// 2. 在路由对应的组件内部使用`this.$route.query`获取参数
+this.$route.query.name // zs
+this.$route.query.id // 18
+</code></pre>
+<h4 id="params-">params传参</h4>
+<pre><code class="lang-JavaScript">// 1. 更改路由规则用于匹配参数
+new VueRouter({
+    routes:[
+        // :id用于匹配/login/13后面的参数13
+        {path:&#39;/login/:id&#39;,component:login}
+    ]
+})
+// 2. 在跳转路径后面使用/拼接参数
+&lt;router-link to = &#39;/login/13&#39;&gt;登录&lt;/router-link&gt;
+
+// 3. 在路由对应组件内部使用`this.$route.params`获取参数
+var login = {
+    template:&#39;&lt;div&gt;登录组件{{this.$route.params.id}}&lt;/div&gt;&#39;,
+    created(){
+        console.log(this.$route.params.id) // 获取到的就是13
+    }
+}
+</code></pre>
+<h3 id="-">嵌套路由</h3>
+<pre><code class="lang-JavaScript">// 1. 在父路由内部使用children属性配置子路由规则,子路由规则对象中的path属性不要 &#39;/&#39; 
+// 2. 在父路由规则对应的组件模板中添加router-view用于显示子路由规则对应的组件
+// 3. 在&lt;router-link&gt;中设置跳转路径(将父路由和子路由的path拼接)
+</code></pre>
+<h2 id="webpack-">webpack的学习</h2>
+<blockquote>
+<p>什么是webpack? 一个基于Node的前端构建工具,可以实现对项目的打包(构建),主要解决文件(模块)之间的依赖,高级代码的转译,文件(模块)的合并和压缩等问题。</p>
+</blockquote>
+<h3 id="-">基本使用</h3>
+<ul>
+<li><code>webpack3.~</code>版本安装使用</li>
+</ul>
+<pre><code class="lang-JavaScript">// 1. 全局安装webpack
+npm i webpack@3.10.0 -g
+
+// 2. 使用
+webpack 入口文件 输出文件
+webpack ./src/main.js ./dist/build.js
+</code></pre>
+<ul>
+<li><code>webpack4.~</code>版本安装使用</li>
+</ul>
+<pre><code class="lang-JavaScript">// 1. 全局安装webpack
+npm i webpack  -g
+npm i webpack-cli -g
+
+// 2. 使用
+webpack 入口文件 -o 输出文件 --mode development/production
+webpack ./src/main.js -o ./dist/build.js --mode development
+</code></pre>
+<h3 id="webpack-">webpack配置文件使用</h3>
+<pre><code class="lang-javascript">// 1. 在项目根目录新建webpack.config.js,并设置 打包的入口文件 和 输出文件
+module.exports = {
+    // 入口文件(绝对路径)
+    entry: path.join(__dirname,&#39;./src/main.js&#39;),
+    // 输出文件
+    output: {
+        path: path.join(__dirname,&#39;./dist&#39;), // 输出文件目录
+        filename: &#39;build.js&#39; // 输出文件名称
+    }
+}
+
+// 2. 执行打包命令
+webpack
+</code></pre>
+<h3 id="webpack-dev-server-">webpack-dev-server的使用</h3>
+<blockquote>
+<p>帮助在项目根目录搭建一个服务器,该服务器可以帮我们托管代码,同时监听所有文件的变化然后自动执行webpack编译命令以及自动刷新浏览器</p>
+</blockquote>
+<h4 id="-">命令行方式</h4>
+<blockquote>
+<p><code>--hot</code>: 热更新,可以局部更新文件
+<code>--open</code>: 自动打开浏览器
+<code>--port</code>: 配置端口号
+<code>--inline</code>: 刷新浏览器
+```javascript
+// 1. 局部安装webpack-dev-server和webpack
+npm i webpack-dev-server webpack --save-dev</p>
+</blockquote>
+<p>// 2. 在package.json的scripts节点中添加启动命令
+&quot;scripts&quot;:{
+    &quot;dev&quot;:&quot;webpack-dev-server --inline --open --hot--port 8888&quot;
+}</p>
+<p>// 3. 在项目根目录运行项目
+npm run dev</p>
+<pre><code>
+#### 配置文件方式
+```javascript
+// 1. 在webpack.config.js配置文件中添加如下配置
+devServer:{
+    open: true,
+    port: 8888,
+    hot: true
+}
+
+// 2. 如果设置了 hot:true 这个属性,则需要配置热更新插件
+// 2.0 引入webpack模块
+const webpack = require(&#39;webpack&#39;)
+// 2.1 配置热更新插件
+plugins: [
+    new webpack.HotModuleReplacementPlugin()
+]
+
+// 3. package.json中配置启动命令
+&quot;scripts&quot;:{
+    &quot;dev&quot;:&quot;webpack-dev-server&quot;
+}
+</code></pre><h3 id="-html-webpack-plugin-"><code>html-webpack-plugin</code>的使用</h3>
+<blockquote>
+<p>可以根据指定的HTML模板文件生成一个HTML页面,并且在HTML页面中自动引入打包好的js文件</p>
+</blockquote>
+<pre><code class="lang-javascript">// 1. 安装html-webpack-plugin
+npm i html-webpack-plugin --save-dev
+
+// 2. 在webpack.config.js中的plugins节点中配置插件
+// 2.1 导入html-webpack-plugin
+const htmlWebpackPlugin = require(&#39;html-webpack-plugin&#39;)
+// 2.2 配置插件
+plugins:[
+    new htmlWebpackPlugin({
+        template:path.join(__dirname,&#39;./src/index.html&#39;),// 需要生成的HTML的模板文件
+        filename:&#39;index.html&#39; // 生成的HTML文件的名称
+    })
+]
+</code></pre>
+<h3 id="-css-loader-css-"><code>css-loader</code>处理CSS文件</h3>
+<blockquote>
+<p>解析处理文件后缀名为.css的文件</p>
+</blockquote>
+<pre><code class="lang-javascript">// 1. 安装style-loader css-loader
+npm i style-loader css-loader --save-dev
+
+// 2. 在webpack.config.js中的moudle节点中配置解析规则
+module:{
+    rules:[
+        {
+            test:/\.css$/,
+            use:[&#39;style-loader&#39;,&#39;css-loader&#39;]
+        }
+    ]
+}
+</code></pre>
+<h3 id="-less-loader-less-"><code>less-loader</code>处理less文件</h3>
+<blockquote>
+<p>解析处理文件后缀名为.less的文件</p>
+</blockquote>
+<pre><code class="lang-javascript">// 1. 安装less less-loader
+npm i less less-loader --save-dev
+
+// 2. 在webpack.config.js中的moudle节点中配置解析规则
+module:{
+    rules:[
+        {
+            test:/\.less$/,
+            use:[&#39;style-loader&#39;,&#39;css-loader&#39;,&#39;less-loader&#39;]
+        }
+    ]
+}
+</code></pre>
+<h3 id="-scss-loader-scss-"><code>scss-loader</code>处理scss文件</h3>
+<blockquote>
+<p>解析处理文件后缀名为.scss的文件</p>
+</blockquote>
+<pre><code class="lang-javascript">// 1. 安装node-sass sass-loader
+npm i node-sass sass-loader --save-dev
+
+// 2. 在webpack.config.js中的moudle节点中配置解析规则
+module:{
+    rules:[
+        {
+            test:/\.scss$/,
+            use:[&#39;style-loader&#39;,&#39;css-loader&#39;,&#39;sass-loader&#39;]
+        }
+    ]
+}
+</code></pre>
+<h3 id="-url-loader-"><code>url-loader</code>处理图片等资源文件</h3>
+<blockquote>
+<p>解析处理项目中引入的图片、字体图标、音视频等资源文件</p>
+</blockquote>
+<pre><code class="lang-javascript">// 1. 安装file-loader ulr-loader
+npm i file-loader ulr-loader --save-dev
+
+// 2. 在webpack.config.js中的moudle节点中配置解析规则
+module:{
+    rules:[
+        {
+            test:/\.(png|jpg|gif)/,
+            use:&#39;url-loader?limit=20000&amp;name=[hash:8]-[name].[ext]&#39;
+            // 当需要打包的文件小于limit的值,会将图片转换成base64字符串在build.js中进行引用
+            // 当需要打包的文件大于limit的值,会将图片打包到输出目录中
+            //一般比较小的图片才需要被转成base64,所以该值不宜太大
+
+            // name=[hash:8]-[name].[ext]表示将来打包出来的文件名称以8位hash值和原来的名称进行拼接,文件扩展名不变
+        }
+    ]
+}
+</code></pre>
+<h3 id="-babel-"><code>babel</code>的使用</h3>
+<blockquote>
+<p>解析webpack默认不能处理的JS</p>
+</blockquote>
+<pre><code class="lang-JavaScript">// 1. 安装babel-core babel-loader babel-plugin-transform-runtime
+npm i babel-core babel-loader babel-plugin-transform-runtime --save-dev
+
+// 2. 安装babel-preset-env babel-preset-stage-0
+npm i babel-preset-env babel-preset-stage-0 --save-dev
+
+// 3. 在webpack.config.js中的moudle节点中配置解析规则
+module:{
+    rules:[
+        {
+            test:/\.js$/,
+            use:&#39;babel-loader&#39;,
+            exclude:/node_modules/ //排除掉node_modules文件夹,让babel-loader不去解析node_modules文件夹中的js文件
+        }
+    ]
+}
+
+// 4. 在项目根目录新建.babelrc文件,书写如下配置
+{
+    &quot;presets&quot;:[&quot;env&quot;,&quot;stage-0&quot;],
+    &quot;plugins&quot;:[&quot;transform-runtime&quot;]
+}
+</code></pre>
+<h2 id="webpack-vue">webpack中使用Vue</h2>
+<pre><code class="lang-JavaScript">// 1. 安装vue vue-loader vue-template-compiler
+npm i vue --save
+npm i vue-loader vue-template-compiler --save-dev
+
+// 2. webpack.config.js中配置解析规则
+module: {
+    rules: [
+        {
+            test:/\.vue$/,use:&#39;vue-loader&#39;
+        }
+    ]
+}
+
+// 3. 在index.html中加入一个需要Vue托管的区域
+&lt;div id=&quot;app&quot;&gt;&lt;/div&gt;
+
+// 4. 新建App.vue组件
+&lt;template&gt;
+    &lt;div&gt;vue组件&lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+export default {
+
+}
+&lt;/script&gt;
+&lt;style&gt;
+&lt;/style&gt;
+
+// 5. main.js中导入vue的包,渲染App.vue组件
+import Vue from &#39;vue&#39;
+import App from &#39;./App.vue&#39;
+
+new Vue({
+    el:&#39;#app&#39;,
+    render:c=&gt;c(App) //将App组件渲染到id为app的区域中
+})
+</code></pre>
+<h2 id="webpack-vue-router">webpack 中集成vue-router</h2>
+<pre><code class="lang-JavaScript">// 1. 安装vue-router
+npm i vue-router --save
+
+// 2. 在main.js中导入vue-router并实例化路由添加路由规则
+import VueRouter from &#39;vue-router&#39;
+Vue.use(VueRouter) // 保证在vue的组件中可以使用vue-router提供的组件 如&lt;router-view&gt; &lt;router-link&gt;
+
+const router = new VueRouter({
+    routes: [
+        {
+            path: &#39;/login&#39;, component: login
+        }
+    ]
+})
+
+// 3. 将实例化的router绑定到Vue
+new Vue({
+    el: &#39;#app&#39;,
+    render: c =&gt; c(App),
+    router // 将router实例绑定到Vue上 以保证vue实例中可以访问$route $router等属性
+})
+
+// 4. 在App.vue中添加路由占位router-view标签
+&lt;router-link to = &quot;/login&quot;&gt;登录&lt;router-link&gt;
+&lt;router-view&gt;&lt;/router-view&gt;
+</code></pre>
+<hr>
+<h2 id="-save-save-dev">--save和--save-dev</h2>
+<pre><code class="lang-js">// 项目开发期间需要安装的依赖
+// --save-dev 会将安装的包名以及版本号记录到package.json文件中的devDependencies节点中
+npm install webpack --save-dev 等价于 npm install webpack -D
+
+// 项目上线后需要安装的依赖
+// --save 会将安装的包名以及版本号记录到package.json文件中的dependencies节点中
+npm i webpack --save 等价于 npm i webpack -S
+
+npm i 会将所有在package.json文件中的devDependencies节点和dependencies节点内所有的依赖包全部安装一遍
+npm i --save-dev 只会下载devDependencies中的所有依赖包
+npm i --save 只会下载dependencies中的所有依赖包
+
+// 为什么安装包的时候要区分 --save 和 --save-dev
+// 1. 使项目的阅读更加友好，便于理解项目结构
+// 2. 安装对应阶段的包时更加方便
+</code></pre>
+<h2 id="vue-cli-">vue-cli脚手架的使用</h2>
+<pre><code class="lang-js">// 1. 安装vue-cli脚手架
+npm i vue-cli -g
+
+// 2. 初始化项目模板
+vue init webpack 项目名称
+eslint(语法规范化插件) 不要安装  当安装之后只能按照ESLint中规定的语法格式去书写代码
+e2e(测试框架) 不要安装
+unit test(单元测试框架) 不要安装
+
+// 3. 进入项目安装所有依赖
+npm i
+
+// 4. 运行
+npm run dev
+
+config/index.js中 17/18行改端口号和自动打开浏览器
+</code></pre>
+<h2 id="vscode-">VSCode用户代码片段</h2>
+<pre><code class="lang-json">&quot;Print to vue&quot;: {
+        &quot;prefix&quot;: &quot;vuec&quot;,
+        &quot;body&quot;: [
+            &quot;&lt;template&gt;&quot;,
+            &quot;    &lt;div&gt;&quot;,
+            &quot;      御剑乘风来,除魔天地间!$1&quot;,
+            &quot;    &lt;/div&gt;&quot;,
+            &quot;&lt;/template&gt;&quot;,
+            &quot;           &quot;,
+            &quot;&lt;script&gt;&quot;,
+            &quot;export default{&quot;,
+            &quot;    $2         &quot;,
+            &quot;}&quot;,
+            &quot;&lt;/script&gt;&quot;,
+            &quot;&lt;style scoped&gt;&quot;,
+            &quot;$3            &quot;,
+            &quot;&lt;/style&gt;&quot;
+        ],
+        &quot;description&quot;: &quot;create a vue template&quot;
+    }
+</code></pre>
+<h2 id="-">将项目提交到码云</h2>
+<pre><code>// 1. 在项目文件夹初始化git
+git init
+
+// 2. 将代码提交到暂存区
+git add .
+
+// 3. 提交代码
+git commit -m &#39;描述信息&#39;
+
+// 4. 关联远程分支
+git remote add origin https://gitee.com/UniverseKing/tes.git
+
+// 5. 推送到远程分支
+git push -u origin master
+
+// 6. 查看文件信息
+git status
+
+// 7. 查看log
+git log --oenline
+
+// 8. 切换版本记录
+git reset --hard 版本号
+</code></pre><h2 id="-npm-">设置npm镜像源为淘宝镜像</h2>
+<pre><code class="lang-js"> npm config set registry https://registry.npm.taobao.org
+</code></pre>
+<h2 id="vuex-">Vuex的使用</h2>
+<blockquote>
+<p>Vuex是一个状态管理库,或者说是专为Vue应用程序开发设计的状态管理模式,它采用集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化。</p>
+<p>注:所谓状态,可以理解成项目中各个组件需要用到的数据。</p>
+<p>Demo:<a href="https://gitee.com/UniverseKing/vuex-study">https://gitee.com/UniverseKing/vuex-study</a></p>
+</blockquote>
+<h3 id="-">初始化公共状态</h3>
+<pre><code class="lang-JavaScript">1. 安装vuex
+npm i vuex --save
+
+2. 入口文件中实例化Store
+import Vuex from &#39;vuex&#39;
+Vue.use(Vuex)
+var store = new Vuex.Store({
+  // 1. 用于定义状态(公共数据),类似于Vue实例中的data方法
+  state:{
+      msg:&#39;初始化的数据&#39;
+  },
+  // 2. 用于修改状态,类似于Vue实例中methods
+  mutations:{
+      change(state,arg){
+          // 更改状态
+          state.msg = arg
+      }
+  },
+  // 3. 用于获取数据(获取数据之前可以进行一些操作),类似于Vue实例中的过滤器和计算属性
+  // getters 主要会用在跨组件传值
+  // getters 中定义的方法内部依赖的数据发生变化会自动重新调用函数计算返回值
+  getters:{
+      fixmsg(state){
+          return `${state.msg}----处理后的数据`
+      }
+  },
+  // 4. actions和mutations都是定义对数据进行操作的方法,mutations中都是同步方法,mutations中定义异步方法
+  // Action 提交的是 mutation，而不是直接变更状态。所以需要修改状态还是需要使用mutations中定义的方法
+
+  // 从网络请求回来的数据需要保存到store
+  // 发送网络请求的方法可以定义到actions中
+  // actions主要用于处理异步方法
+  actions:{
+      asyncchange(context,arg){
+          // 异步方法
+          setTimeout(() =&gt; {
+              context.commit(&#39;change&#39;,arg)
+          }, 3000)
+      }
+  }
+})
+
+3. 注入到Vue实例中
+new Vue({
+    el:&#39;#app&#39;,
+    store
+})
+</code></pre>
+<h3 id="-">使用状态</h3>
+<pre><code class="lang-JavaScript">1. 使用state中的数据
+JavaScript: this.$store.state.msg
+HTML: $store.state.msg
+
+2. 使用getters中的数据
+JavaScript: this.$store.getters.fixmsg
+HTML: $store.getters.msg
+</code></pre>
+<h3 id="-">变更状态(修改数据)</h3>
+<blockquote>
+<p>状态的变更必须使用mutations中提供的方法进行修改</p>
+</blockquote>
+<pre><code class="lang-JavaScript">1. 提交mutations中的变更方法
+this.$store.commit(&#39;change&#39;,&#39;我是被修改的数据&#39;)
+
+2. 异步提交actions中的变更方法
+this.$store.dispatch(&#39;asyncchange&#39;,&#39;我是被异步修改的数据&#39;)
+</code></pre>
+<h3 id="-">使用辅助函数</h3>
+<blockquote>
+<p>辅助函数可以直接将<code>state</code>,<code>getters</code>中的数据映射到Vue组件中的计算属性上,可以将<code>mutations</code>,<code>actions</code>中的方法映射到组件中的<code>methods</code>中,然后在组件中就可以直接以属性和方法的方式去使用数据和方法。</p>
+</blockquote>
+<pre><code class="lang-JavaScript">import { mapState } from &#39;vuex&#39;
+import { mapGetters } from &#39;vuex&#39; 
+import { mapMutations } from &#39;vuex&#39;
+import { mapActions } from &#39;vuex&#39;
+
+new Vue({
+    computed:mapGetters([
+        &#39;count&#39;
+    ])
+})
+// ==&gt;等价于
+new Vue({
+    computed:{
+        count(){
+            return this.$store.state[&#39;count&#39;]
+        }
+})
+</code></pre>
+<p> <a href="https://github.com/UniverseKing/awesome-github-vue#UI%E7%BB%84%E4%BB%B6">https://github.com/UniverseKing/awesome-github-vue#UI%E7%BB%84%E4%BB%B6</a></p>
+<hr>
+<h2 id="vue-">Vue面试题</h2>
+<h3 id="v-on-">v-on事件修饰符和键盘修饰符的作用?</h3>
+<blockquote>
+<p>事件修饰符主要是用于处理浏览器上的默认行为,比如阻止事件的冒泡,阻止a标签、form表单的默认事件</p>
+<p>键盘修饰符主要针对keyup、keydown,如果希望事件由指定的键进行触发,可以用键盘修饰符进行指定</p>
+</blockquote>
+<ul>
+<li>阻止默认行为<pre><code class="lang-html">&lt;a v-on:click.prevent = &#39;jump&#39; href = &#39;#&#39;&gt;&lt;/a&gt;
+&lt;form @click.prevent = &#39;jump&#39;&gt;&lt;/form&gt;
+</code></pre>
+</li>
+<li><code>once</code>:只触发一次事件</li>
+<li><code>self</code>:保证事件由自己触发,不会经过冒泡或者捕获进行触发<pre><code class="lang-html">&lt;div @click = &#39;divClick&#39;&gt;
+  &lt;p @click.self = &#39;pClick&#39;&gt;&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+</li>
+</ul>
+<pre><code class="lang-html">&lt;input @keyup.f1 = &#39;inpKey&#39;&gt;&lt;/input&gt;
+</code></pre>
+<pre><code class="lang-js">// 自定义键盘修饰符
+// Vue.config.keycodes.f2 = 112
+</code></pre>
+<ul>
+<li><code>stop</code>:阻止冒泡</li>
+</ul>
+<h3 id="v-if-v-show-">v-if和v-show的区别,使用场景?</h3>
+<blockquote>
+<p>v-if和v-show都是用来控制元素的显示和隐藏,当值是true，元素显示，值为false,元素隐藏</p>
+<p>区别: v-if当切换布尔值时,会创建/删除元素；v-show当切换布尔值时,会改变元素的样式,<code>display:block</code></p>
+<p>使用场景:当元素显示隐藏切换频繁时使用v-show,反之使用v-if; 例如:页面加载数据时的loading动画可以使用v-if;</p>
+<p>页面中某个元素需要使用动画效果,这个动画效果需要人为进行操作控制,那么最好使用v-show,加入购物车时的小球飞入动画</p>
+</blockquote>
+<h3 id="v-cloak-">v-cloak解决插值表达式闪烁的原理?</h3>
+<blockquote>
+<p>为什么出现闪烁问题?</p>
+<p>由于网速等原因导致vue.js没有被加载回来,此时页面中的插值表达式不会被vue实例解析,浏览器进行解析的时候回直接当做字符串;然后vue.js加载回来之后,vue实例又能够进行解析,那么插值表达式就会被解析成具体的值,这个过程会出现闪烁现象</p>
+<p>v-cloak原理</p>
+<p>使用v-cloak指令绑定到元素上面之后,再配合<code>[v-cloak]{display:none}</code>这个样式进行控制;</p>
+<p>在浏览器进行解析时,浏览器会将属性选择器的样式作用于元素身上,该元素会被隐藏;原后vue进行解析时,会将<code>v-cloak</code>从元素身上删除,样式也随之失效,插值表达式中的值也能够显示出来。</p>
+</blockquote>
+<pre><code class="lang-js">
+&lt;style&gt;
+    [v-cloak]{
+        display:none
+    }
+&lt;/style&gt;
+
+
+&lt;div v-cloak&gt;{{msg}}&lt;/div&gt;
+
+new Vue({
+    data:{
+        msg:&#39;hello word&#39;
+    }
+})
+
+&lt;script src = &#39;./vue.js&#39;&gt;&lt;/script&gt;
+</code></pre>
+<h3 id="-vue-">什么是Vue双向数据绑定?原理?</h3>
+<blockquote>
+<p>v-model指令、数据视图同步更新、使用的是ES5提供的<code>Object.defineProperty()</code>这个方法实现数据劫持</p>
+<p>数据劫持(Object.defineProperty())</p>
+<p>数据如何从模型同步到视图?当模型中数据发生变化时会触发Object.defineProperty的set方法,在这个方法内部能够劫持到数据的改变,然后就可以在该方法内部通知视图更新</p>
+<p>视图中的数据如何同步到模型中?(v-model指令是怎么实现改变了元素中的数据同步到模型中)监听表单元素的change事件,在change事件中可以拿到用户输入的数据,然后给模型中的数据赋值</p>
+</blockquote>
+<pre><code class="lang-js">var obj = {}
+// 给对象设置属性
+obj.name = &#39;zs&#39;
+// 获取对象的某个属性
+console.log(obj.name)
+
+
+var value = &#39;zs&#39;
+Object.defineProperty(obj,&#39;name&#39;,{
+    get(){
+        return value
+    },
+    set(v){
+        // 设置值的时候就是数据劫持
+        // 只要走这个方法表示模型中的数据在发生变化
+        // 调用视图更新的函数
+        update()
+        value = v
+    }
+})
+
+obj.name = &#39;ls&#39;
+console.log(obj.name) // ls
+
+function update(){
+    // 专门用来更新视图
+}
+</code></pre>
+<h3 id="angular-">Angular双向数据绑定?</h3>
+<blockquote>
+<p>脏数据检测: 会使用定时器进行轮询,并不是将定时器一直开着,只有触发了指定的一些方法时才会进行轮询,$apply,发送异步请求,触发了定时器时也会轮询</p>
+</blockquote>
+<pre><code class="lang-js">&lt;div&gt;{{msg}}&lt;/div&gt;
+&lt;input @change = &#39;inpChange($event)&#39;&gt;&lt;/input&gt;
+&lt;button @click = &#39;change&#39;&gt;&lt;/button&gt;
+
+new Vue({
+    data:{
+        msg:&#39;hello&#39;,
+        name:&#39;zs&#39;
+    },
+    methods:{
+        change(){
+            this.msg = &#39;word&#39;
+        },
+        inpChange(v){
+            this.msg = v.targe.value
+        }
+    }
+})
+</code></pre>
+<h3 id="scoped-scoped-html-">scoped作用原理?怎么解决加了scoped后动态渲染的HTML标签样式不能修改的问题?</h3>
+<blockquote>
+<p>scoped可以隔离组件之间的样式,避免样式污染</p>
+<p>作用原理:当一个组件的style加了<code>scoped</code>后,首先vue解析当前组件时,会给当前组件中所有元素加上一个随机的属性,然后style中书写的样式会全部变成属性选择器,那么即使其他组件有相同的样式或者相同的标签，由于随机添加的属性是不一样的,组件之间的样式也不会相互影响</p>
+<p>当在父组件中取修改子组件中标签样式,可以使用<a href="https://vue-loader.vuejs.org/zh/guide/scoped-css.html#%E6%B7%B1%E5%BA%A6%E4%BD%9C%E7%94%A8%E9%80%89%E6%8B%A9%E5%99%A8">vue-loader深度作用选择器</a>,在父组件的样式名和子组件的样式名之间添加<code>&gt;&gt;&gt;</code>或者<code>/deep/</code></p>
+</blockquote>
+<h3 id="vue-">Vue生命周期函数的理解?</h3>
+<blockquote>
+<p>生命周期就是在vue实例执行过程中会触发的一批函数,这些函数可以帮助我们处理不同时间段的业务逻辑</p>
+<p>生命周期的四个阶段:</p>
+<p>实例创建阶段:</p>
+</blockquote>
+<ul>
+<li><code>beforeCreate</code>:vue实例被创建时触发,此时仅仅是分配了内存,vue实例上的属性和方法都还没被绑定</li>
+<li><code>created</code>:vue实例被创建完毕,data中的属性和methods中的方法都已经被挂载到了vue实例上</li>
+</ul>
+<blockquote>
+<p>DOM渲染阶段:</p>
+</blockquote>
+<ul>
+<li><code>beforeMount</code>:vue实例中的数据已经被解析渲染到了内存中的虚拟DOM上,但真实DOM中指令还没有被解析</li>
+<li><code>mounted</code>:vue实例中的数据已经完全被渲染到了真实DOM中</li>
+</ul>
+<blockquote>
+<p>数据更新阶段:vue实例上的数据发生变化时触发</p>
+</blockquote>
+<ul>
+<li><code>beforeUpdate</code>:模型中数据已经发生变化,但还没有同步更新到视图中</li>
+<li><code>updated</code>:模型中数据发生了变化,而且已经同步到了视图中</li>
+</ul>
+<blockquote>
+<p>实例销毁阶段:</p>
+</blockquote>
+<ul>
+<li><code>beforeDestroy</code>:vue中的数据和方法还能继续使用,但是指令不能再被vue解析</li>
+<li><code>destroyed</code>:vue中的数据和方法都已经被销毁</li>
+</ul>
+<h3 id="vue-router-">vue-router路由模式有几种,原理分别是什么?</h3>
+<blockquote>
+<p>vue-router路由库是用哪种技术实现的,总共有两种,分别叫hash模式和history模式,默认是history模式</p>
+<p>hash模式:地址上带有#号;url地址可以放在任意标签中打开;可以兼容低版本的浏览器</p>
+<p>hash模式原理:监听<code>hashchange</code>事件,可以调用<code>window.location.hash</code>获取到锚点值,和路由规则进行匹配,匹配到之后将路由规则中定义的组件渲染到页面</p>
+<p>history模式:地址上没有#号,更加符合URL形式;url地址不能重复打开;</p>
+<p>history模式原理:利用HTML5新提供的<code>history.pushState</code> API 来完成 URL 跳转而无须重新加载页面</p>
+<p>history模式需要后台进行相关配置:要在服务端增加一个覆盖所有情况的候选资源：如果 URL 匹配不到任何静态资源，则应该返回同一个 index.html 页面，这个页面就是你 app 依赖的页面</p>
+</blockquote>
+<h3 id="vue-router-">vue-router导航钩子函数使用场景?</h3>
+<blockquote>
+<p><code>beforeEach</code>:全局守卫,在路由跳转时会对路由进行拦截,只有调用了<code>next</code>函数才会释放路由,使用场景:通常在后台管理系统中,页面是需要登录之后才能访问,那么对于所有的页面跳转都需要使用<code>beforeEach</code>进行拦截判断是否登录</p>
+<p><code>beforeEnter</code>:路由独享守卫,只会拦截加了独享守卫的路由跳转。使用场景:如果整个项目中只有某一部分页面是需要登录之后才能访问,此时只能针对这一部分页面的路由规则加上独享守卫进行拦截。</p>
+</blockquote>
+<h3 id="vue-router-">vue-router路由懒加载怎么使用?(单页应用程序的性能优化)</h3>
+<blockquote>
+<p>路由懒加载:使用懒加载可以在跳转到具体路由时才去加载对应的组件代码,没有访问的路由的组件代码永远不会加载回来。</p>
+<p>用法:将导入组件的方式换成:<code>const Foo = () =&gt; import(&#39;./Foo.vue&#39;)</code></p>
+</blockquote>
+<h3 id="vue-use-vue-">Vue.use()方法作用?Vue插件实现?</h3>
+<blockquote>
+<p>Vue.use是用来安装Vue的插件</p>
+<p>插件可以实现的功能:</p>
+</blockquote>
+<pre><code class="lang-js">MyPlugin.install = function (Vue, options) {
+  // 1. 添加全局方法或属性
+  Vue.myGlobalMethod = function () {
+    // 逻辑...
+  }
+  // 2. 添加全局资源(指令、过滤器、组件)
+  Vue.directive(&#39;my-directive&#39;, {
+    bind (el, binding, vnode, oldVnode) {
+      // 逻辑...
+    }
+  })
+  // 注册过滤器
+  Vue.filter(&#39;datefmt&#39;,function(){
+      return &#39;2018-06-12&#39;
+  })
+  // 注册组件
+  Vue.component(&#39;com&#39;,{})
+
+  // 3. 混入组件(将一个组件的功能混入到另一个组件中)
+  Vue.mixin({
+    created: function () {
+      // 逻辑...
+    }
+  })
+  // 4. 添加实例方法
+  Vue.prototype.$myMethod = function (methodOptions) {
+    // 逻辑...
+  }
+}
+</code></pre>
+<blockquote>
+<p>如何实现插件:插件必须实现一个<code>install</code>方法,这个方法接收一个参数是Vue,这个方法内部就可以去添加全局的组件以及实例的属性。然后在使用插件时,调用Vue.use(插件对象),则install方法中的形参Vue就会接收到实参Vue。</p>
+</blockquote>
+<h3 id="axios-">axios拦截函数的使用场景?请求拦截/响应拦截</h3>
+<blockquote>
+<p>请求拦截:在发送请求之前,对请求对象做相关配置,给请求头添加验证属性(登录校验)、设置参数数据格式(Content-Type)</p>
+<p>响应拦截:当接口返回的信息是统一的类型时,如果都在具体的请求函数里面去做处理,比较繁琐,可以在响应拦截器中先做统一处理,在分发到具体的函数中。例如当后台的token过期时,如果在每一个请求函数中都做判断,然后跳转页面比较麻烦,由于token过期后台会返回规定的统一状态码,那么就可以使用响应拦截在拦截器中进行判断然后跳转</p>
+</blockquote>
+<pre><code class="lang-js">// 添加请求拦截器
+axios.interceptors.request.use(function (config) {
+    // 在发送请求之前做些什么
+    return config;
+  }, function (error) {
+    // 对请求错误做些什么
+    return Promise.reject(error);
+  });
+
+// 添加响应拦截器
+axios.interceptors.response.use(function (response) {
+    if(response.code = 400){
+        this.$router.push(&#39;/login&#39;)
+    }
+    // 对响应数据做点什么
+    return response;
+  }, function (error) {
+    // 对响应错误做点什么
+    return Promise.reject(error);
+  });
+</code></pre>
+<h2 id="jsonp-">JSONP跨域原理?其他解决跨域方式?</h2>
+<ul>
+<li><strong>JSONP</strong>:JSON数据格式的一种使用方式,用于解决跨域问题</li>
+<li><strong>跨域</strong>: 由于浏览器同源策略的限制,不同源的URL不能互相通信,这种现象叫做跨域</li>
+<li><strong>同源策略</strong>: 两个域名只有 <strong>协议</strong> <strong>主机地址</strong> <strong>端口号</strong>完全一致时才能相互通信访问</li>
+<li><p><strong>JSONP实现原理</strong>：利用script标签的src属性发送请求不受同源策略的限制这个机制去实现跨域资源共享(script标签能够跨域访问是历史遗留问题,并不安全) </p>
+<ol>
+<li>动态创建一个script标签,并且将需要请求的URL地址设置给script标签的src属性,同时在URL地址后面拼接上一个回调函数名称<pre><code class="lang-js">function getJson(data){
+console.log(data)
+}
+// getJson就是在前端本地定义好的一个方法的方法名
+&lt;script src = &#39;http://lovegf.cn/jsonp?callback=getJson&#39;&gt;
+</code></pre>
+</li>
+<li>后台接收到该请求后,先根据参数判断是否是JSONP请求,如果是,则将客户端请求的数据整理好,和前端发送过来的方法名一起拼接成一个函数调用的字符串,客户端需要的数据就是这个函数调用时传的参数<pre><code class="lang-js">// 假设要发送给前端的数据是 &#39;ok&#39;
+&#39;getJson(&#39;ok&#39;)&#39;
+// 响应给前端
+res.end(&#39;getJson(&#39;ok&#39;)&#39;)
+</code></pre>
+</li>
+<li>由于后台响应回来的数据是一个字符串,而且是函数调用,所以前端拿到响应回来的数据相当于调用了该方法,那么前端定义好的方法会自动执行,而且方法内的形参可以接收到实参值,也就是后台拼接的数据<pre><code class="lang-js">function getJson(data){
+console.log(data) // ok
+}
+</code></pre>
+</li>
+<li>数据拿到之后,一般这个动态创建的script标签会被删除掉</li>
+</ol>
+</li>
+</ul>
+<h3 id="cors">CORS</h3>
+<pre><code class="lang-js">res.header(&quot;Access-Control-Allow-Origin&quot;, &quot;*&quot;);
+res.header(&quot;Access-Control-Allow-Headers&quot;, &quot;X-Requested-With&quot;);
+res.header(&quot;Access-Control-Allow-Methods&quot;,&quot;*&quot;);
+</code></pre>
+<h3 id="-">代理(解决的是开发阶阶段跨域问题)</h3>
+<blockquote>
+<p>代理是通过服务器向服务器发送数据请求不存在跨域问题的机制解决浏览器向存在跨域问题的服务器发请求的技术</p>
+<p>C -&gt; S</p>
+<p>在客户端所在电脑上搭建一个服务器P</p>
+<p>C -&gt; P -&gt; S</p>
+</blockquote>
+<p>// 跨域通常存在于开发阶段
+<a href="http://192.168.0.111/api/getlist">http://192.168.0.111/api/getlist</a></p>
+<p><a href="http://192.168.0.112/index.html">http://192.168.0.112/index.html</a></p>
+<p><a href="http://172.16.273.73/api/getlist">http://172.16.273.73/api/getlist</a>
+<a href="http://172.16.273.73/index.html">http://172.16.273.73/index.html</a></p>
+<h2 id="-">什么是深拷贝?深拷贝浅拷贝的区别?如何实现?</h2>
+<blockquote>
+<p>深拷贝讨论的对象 主要是指定js中的复杂数据类型</p>
+<p>最简单的实现方式:JSON.parse(JSON.stringify(obj)),这种方式的弊端不能实现对象中函数的拷贝</p>
+<p>比较常见的实现方式: for-in循环加上递归</p>
+<p>for-in 循环需要判断不同的数据类型,如果是对象使用递归克隆,如果是数组,可以直接调用concat方法或者splice方法进行深拷贝,如果是函数/Date,使用constructor重新实例化函数和时间类型</p>
+<p><a href="https://juejin.im/entry/57bd3817a34131005b21cbdb">https://juejin.im/entry/57bd3817a34131005b21cbdb</a></p>
+</blockquote>
+<h2 id="-promise-">谈谈Promise的理解?怎么实现?</h2>
+<h2 id="mvc-mvvm-">MVC、MVVM理解?</h2>
+<h2 id="-dom-">虚拟DOM的理解?实现?</h2>
+<h2 id="-">工作中处理过的兼容性问题?</h2>
+<blockquote>
+<p><a href="https://juejin.im/entry/5b22686be51d4558af4015a1">兼容性问题处理</a></p>
+<p><a href="https://juejin.im/entry/5a17ad3af265da432240e1f2">移动端开发的兼容问题</a></p>
+<p>移动端滚动穿透</p>
+<p>移动端输入框被键盘挡住问题</p>
+<p>IOS滚动不平滑的问题</p>
+<p>click 300ms 延时响应 </p>
+</blockquote>
+<h2 id="-">处理过的性能优化问题?</h2>
+<p><a href="https://juejin.im/post/5b0bff30f265da08f76cc6f0">性能优化</a>
+<a href="https://juejin.im/post/5b0bff30f265da08f76cc6f0">前端性能优化--从 10 多秒到 1.05 秒</a></p>
+<h3 id="webpack-">webpack里面</h3>
+<ol>
+<li>路由懒加载(组件按需加载)</li>
+<li>分离第三方包(抽取第三方模块安装的包的代码,较少build.js的体积)</li>
+<li>分离CSS</li>
+</ol>
+<h3 id="js">JS</h3>
+<ol>
+<li>对高频触发的事件进行节流或消抖(touchmove)</li>
+<li>尽量减少 HTTP 请求个数——须权衡(精灵图是合并请求,分离第三方包/css是拆分请求)</li>
+<li>避免空的 src 和 href</li>
+<li>减少 DOM 访问,减少DOM访问层级(迫不得已需要访问DOM,可以将DOM进行缓存)</li>
+<li>使用 CDN（内容分发网络）(静态资源使用CDN加速,用户访问时从CDN获取资源,CDN根据IP地址直接返回当前城市服务器中的资源)</li>
+</ol>
+<h2 id="-">工作中遇到的难解决的问题?后来是如何解决的?</h2>
+<ul>
+<li><p>scoped问题(父组件无法直接修改子组件样式,vue-loader深度作用选择器)</p>
+</li>
+<li><p>mui.css引入到脚手架,打包时会报SVG图片属性错误(需要将mui.css文件中引入SVG图片的单引号改成双引号)</p>
+</li>
+<li><p>mui严格模式(当webpack项目中引入mui.js,会报caller,callee，arguments在严格模式下无法使用的错误)</p>
+</li>
+</ul>
+<pre><code class="lang-js">
+// 真正问题产生是由于babel-loader在编译代码时会加严格模式限制
+// 方法一: .babelrc文件中忽略不需要使用严格模式转换的文件路径
+ &quot;ignore&quot;: [
+    &quot;./src/js/mui/mui.min.js&quot;
+  ]
+
+// 方法二: babel-loader配置中排除掉不需要严格模式转换的文件
+{ 
+    test: /\.js$/,
+    use: &#39;babel-loader&#39;,
+    // exclude: /mui\.min\.js$/
+    exclude:[&quot;./src/js/mui/mui.min.js&quot;]
+}
+
+// 方法三: babel-plugin-transform-remove-strict-mode 移除整个项目打包编译时的严格模式
+// https://www.npmjs.com/package/babel-plugin-transform-remove-strict-mode
+1. 安装babel-plugin-transform-remove-strict-mode
+npm install babel-plugin-transform-remove-strict-mode --save-dev
+
+2. babelrc中添加
+{
+  &quot;plugins&quot;: [&quot;transform-remove-strict-mode&quot;]
+}
+</code></pre>
+
+          	</article>
+        </div>
+		</div>
+  </body>
+</html>
+<script type="text/javascript" src="toc/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="toc/js/jquery.ztree.all-3.5.min.js"></script>
+<script type="text/javascript" src="toc/js/ztree_toc.js"></script>
+<script type="text/javascript" src="toc_conf.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+    var css_conf = eval(markdown_panel_style);
+    $('#readme').css(css_conf)
+    
+    var conf = eval(jquery_ztree_toc_opts);
+		$('#tree').ztree_toc(conf);
+});
+//-->
+</SCRIPT>
